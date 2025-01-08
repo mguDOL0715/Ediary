@@ -4,10 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emotional Diary</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF; /* 기본 배경색 흰색으로 설정 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            width: 320px;
+            text-align: center;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+            top: -45px;
+        }
+
+        .header img {
+            width: 30px;
+            cursor: pointer;
+        }
+
+        .title {
+            font-size: 20px;
+            line-height: 1.2;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .buttons button img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+        }
+
+        textarea {
+            width: calc(100% - 14px);
+            max-width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 14px;
+            resize: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .controls button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .controls #playPause img {
+            width: 20px;
+        }
+
+        .controls #save {
+            width: 60px;
+            height: 30px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <!-- 메인 페이지 -->
     <div class="container" id="mainPage">
         <div class="header">
             <img id="calendarIcon" src="images/달력.png" alt="달력">
@@ -25,50 +123,62 @@
         </div>
     </div>
 
-    <!-- 달력 페이지 -->
-    <div class="calendar-page" id="calendarPage" style="display: none;">
-        <div class="diary-container">
-            <div class="header">
-                <div class="title">EMOTIONAL<br>DIARY</div>
-            </div>
-            <div class="calendar-content">
-                <div class="month-header">
-                    <div class="month-left">
-                        <div class="month-number">1</div>
-                        <div class="month-info">JANUARY<br>2025</div>
-                    </div>
-                </div>
-                <div class="calendar-grid">
-                    <div class="weekday sunday">SUN</div>
-                    <div class="weekday">MON</div>
-                    <div class="weekday">TUE</div>
-                    <div class="weekday">WED</div>
-                    <div class="weekday">THU</div>
-                    <div class="weekday">FRI</div>
-                    <div class="weekday">SAT</div>
-                    <div class="day"></div>
-                    <div class="day"></div>
-                    <div class="day">
-                        <div class="emotion-circle happy" onclick="openPopup()">
-                            <img src="free-icon-sunglasses-3525132.png" alt="happy">
-                        </div>
-                    </div>
-                    <div class="day">
-                        <div class="emotion-circle sad" onclick="openPopup()">
-                            <img src="free-icon-sweat-3525093.png" alt="sad">
-                        </div>
-                    </div>
-                    <div class="day">
-                        <div class="emotion-circle angry" onclick="openPopup()">
-                            <img src="free-icon-angry-face-3524806.png" alt="angry">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button id="backToMain" class="save-button">BACK</button>
-        </div>
-    </div>
+    <audio id="audioPlayer"></audio>
 
-    <script src="app.js"></script>
+    <script>
+        const body = document.body;
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseButton = document.getElementById('playPause');
+        let isPlaying = false;
+
+        const songs = {
+            angry: "audio/노래1.mp3", // 화남 노래
+            happy: "audio/노래2.mp3", // 기쁨 노래
+            sad: "audio/노래3.mp3"    // 슬픔 노래
+        };
+
+        const updatePlayPauseIcon = (isPlaying) => {
+            const img = playPauseButton.querySelector('img');
+            img.src = isPlaying ? 'images/멈춤.png' : 'images/재생.png';
+        };
+
+        const playSong = (song) => {
+            if (audioPlayer.src !== song) {
+                audioPlayer.src = song;
+            }
+            audioPlayer.play();
+            isPlaying = true;
+            updatePlayPauseIcon(isPlaying);
+        };
+
+        const pauseSong = () => {
+            audioPlayer.pause();
+            isPlaying = false;
+            updatePlayPauseIcon(isPlaying);
+        };
+
+        playPauseButton.addEventListener('click', () => {
+            if (isPlaying) {
+                pauseSong();
+            } else {
+                playSong(audioPlayer.src);
+            }
+        });
+
+        document.getElementById('angry').addEventListener('click', () => {
+            body.style.backgroundColor = '#FFE6E2';
+            playSong(songs.angry);
+        });
+
+        document.getElementById('happy').addEventListener('click', () => {
+            body.style.backgroundColor = '#FFF9DD';
+            playSong(songs.happy);
+        });
+
+        document.getElementById('sad').addEventListener('click', () => {
+            body.style.backgroundColor = '#E3F8FA';
+            playSong(songs.sad);
+        });
+    </script>
 </body>
 </html>
