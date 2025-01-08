@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotional Diary</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 메인 페이지 -->
+    <div class="container" id="mainPage">
+        <div class="header">
+            <img id="calendarIcon" src="images/달력.png" alt="달력">
+            <div class="title">EMOTIONAL<br>DIARY</div>
+        </div>
+        <div class="buttons">
+            <button id="angry"><img src="images/화남.png" alt="화남"></button>
+            <button id="happy"><img src="images/기쁨.png" alt="기쁨"></button>
+            <button id="sad"><img src="images/슬픔.png" alt="슬픔"></button>
+        </div>
+        <textarea placeholder=" "></textarea>
+        <div class="controls">
+            <button id="playPause"><img src="images/재생.png" alt="재생"></button>
+            <button id="save">SAVE</button>
+        </div>
+    </div>
+
+    <!-- 달력 페이지 -->
+    <div class="calendar-page" id="calendarPage" style="display: none;">
+        <div class="diary-container">
+            <div class="header">
+                <div class="title">EMOTIONAL<br>DIARY</div>
+            </div>
+            <div class="calendar-content">
+                <div class="month-header">
+                    <div class="month-left">
+                        <div class="month-number">1</div>
+                        <div class="month-info">JANUARY<br>2025</div>
+                    </div>
+                </div>
+                <div class="calendar-grid">
+                    <div class="weekday sunday">SUN</div>
+                    <div class="weekday">MON</div>
+                    <div class="weekday">TUE</div>
+                    <div class="weekday">WED</div>
+                    <div class="weekday">THU</div>
+                    <div class="weekday">FRI</div>
+                    <div class="weekday">SAT</div>
+                    <div class="day"></div>
+                    <div class="day"></div>
+                    <div class="day">
+                        <div class="emotion-circle happy" onclick="openPopup()">
+                            <img src="free-icon-sunglasses-3525132.png" alt="happy">
+                        </div>
+                    </div>
+                    <div class="day">
+                        <div class="emotion-circle sad" onclick="openPopup()">
+                            <img src="free-icon-sweat-3525093.png" alt="sad">
+                        </div>
+                    </div>
+                    <div class="day">
+                        <div class="emotion-circle angry" onclick="openPopup()">
+                            <img src="free-icon-angry-face-3524806.png" alt="angry">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="backToMain" class="save-button">BACK</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
